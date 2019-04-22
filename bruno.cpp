@@ -97,7 +97,7 @@ double Bruno::funcao_trapezio(double x) {
 	return pow(M_E, x);
 }
 
-double Bruno::trapezio_simples(float b, float a, int n){
+double Bruno::trapezio_composta(float b, float a, int n){
 	double h = (b-a)/n;
 	double soma = funcao(a);	
 	for (int i = 0; i < n; i++)
@@ -106,5 +106,45 @@ double Bruno::trapezio_simples(float b, float a, int n){
 	soma+= funcao(b);
 
 	return (h*soma)/2;
+}
+
+double Bruno::trapezio_simples(float b, float a, int n){
+	return (b-a) * ((funcao(a) + funcao(b))/2);
+}
+
+double Bruno::hibrido_posicao_falsa_e_metodo_newton(double a, double b, double episilon_1, double episilon_2,double x0, double e1, double e2){
+	double a = posicao_falsa(a,b,episilon_1,episilon_2);
+	return metodoNewton(a,e1,e2);
+}
+
+double Bruno::funcao_simpson(float valor){
+	return valor;
+}
+
+double Bruno::simpson13_simples(float a, float b){
+	double soma = 0.0;
+	return (b-a/3) * (funcao_simpson(a) + 4* funcao_simpson(a+b/2) + funcao_simpson(b));	
+}
+double Bruno::simpson13_composto(float b, float a, int m){
+	double h = (b - a) / m;
+	double soma = funcao_simpson(a);
+	for (i = 0; i < m -2 ; i++)
+		soma += 4 * funcao_simpson(h * i) + 2 * funcao_simpson(h * (i + 1));
+
+	soma += 4 * funcao(h * i) + funcao(b);
+
+	return (soma*h)/3;
+}
+
+double Bruno::funcao_derivasaoExpanTaylor(int valor){
+	return valor;
+}
+// Com erro O(h^2)
+double Bruno::derivasaoExpanTaylor2(int a, int h){
+	return (funcao_derivasaoExpanTaylor(a+h) - funcao_derivasaoExpanTaylor(a)/h);
+}
+
+double Bruno::derivasaoExpanTaylor3(int a, int h){
+	
 }
 
